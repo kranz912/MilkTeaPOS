@@ -1,28 +1,57 @@
 #include <stdio.h>
 #include <string.h>
-#include<limits.h> 
+#include <stdlib.h>
+#include "datastructures.c"
 #define Classic_Pearl
 
 int  _MENU_INDEX = 0;
-struct MenuItem {
-    char Item[50];
-    float Price;
-};
-struct Menu {
-    struct MenuItem MenuItem[INT_MAX];
-};
 
 
+struct Menu * _MENU;
 
-void Push(struct Menu *_menu,struct MenuItem item){
-    printf("%f",item.Price);
-    _menu->MenuItem[_MENU_INDEX] = item;
+void Push(struct MenuItem item){
+    printf("%f \n",item.Name);
+    _MENU->MenuItem[_MENU_INDEX] = item;
     _MENU_INDEX +=1;
 }
 
-int main(){
-    struct Menu *Menu;
+const char * getfield (char * line, int num){
+    const char * token;
+    for (token = strtok(line, ";"); token && *token; token = strtok(NULL, ";\n"))
+    {
+        if(!--num){
+            return token;
+        }
+    }
+    return NULL;
+}
 
-    printf("%f",Menu->MenuItem[0].Price);
+void readMenuFile(char *location){
+    FILE* stream = fopen(location,"r");    
+    char line[1024];
+    while (fgets(line,1024, stream))
+    {
+        char * tmp = strdup(line);
+        char * name=getfield(tmp,1);
+        float price = strtod(getfield(tmp,2),NULL);
+        struct MenuItem item = {name, price};
+        Push(item);
+    }
+    
+}
+
+void printItem(int index){
+    printf("[%d] \t %s \t %f",index, _MENU->MenuItem[index].Name, _MENU->MenuItem[index].Price);
+}
+
+int main(){
+   // struct Menu *Menu;
+    readMenuFile("menu.txt");
+    printf("%f", _MENU->MenuItem[0].Name);
+    //printf("%f",Menu->MenuItem[0].Price);
     printf("hello world");
+    printItem(0);
+
+
+
 }
