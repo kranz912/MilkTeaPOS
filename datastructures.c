@@ -1,7 +1,7 @@
 struct MenuItem {
-    char Name[50];
+    char *Name;
     float Price;
 };
 struct Menu {
-    struct MenuItem MenuItem[2048];
+    struct MenuItem *MenuItem[2048];
 };
