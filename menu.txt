@@ -1,2 +1,5 @@
-Wintermelon; 80.00
-Classic Pearl; 60.00
+Wintermelon, 80.00
+Classic Pearl, 60.00
+Cocoa Pearl, 75.00
+Dark Choco Pearl, 80.00
+Taro Pearl, 85.00
