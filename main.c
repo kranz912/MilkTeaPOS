@@ -61,24 +61,46 @@ void showMenu(){
 
     }
 }
+void buildCart(){
+    for (int i = 0; i < _MENU_INDEX; i++)
+    {
+       char * name = _MENU[i].Name;
+       _CART[_CART_INDEX].id = _CART_INDEX;
+       _CART[_CART_INDEX].Name = name;
+       _CART[_CART_INDEX].quantity = 0;
+       _CART_INDEX += 1;
+    }
+}
+void showCart(){
+    for (int i = 0; i < _CART_INDEX; i++)
+    {
+        printf("[%d] %-50s %-12d \n",_CART[_CART_INDEX].Name, _CART[_CART_INDEX].quantity);
+    }
+}
+
 int main(){
 
     
     readMenuFile("menu.txt");
     system("CLS");
-
+    buildCart();
     char * input[50];
     int quantity=0;
-    while (input!="cancel" || input !="done")
+    while (input!="cancel" && input !="done")
     {
         showMenu();
-        printf("(Enter done to finish orders)\n");
-        printf("(Enter cancel to cancel orders)\n");
-        printf("Enter Item Number: ");
+        printf("Enter item number to add it into the cart");
+        printf("Enter done to finish orders\n");
+        printf("Enter cancel to cancel orders\n");
+        printf("Enter cart to see what is inside the cart \n");
+        printf("Input: ");
         scanf("%s",input);
-        if(input!="cancel" || input !="done"){
+        if(input!="cancel" && input !="done" && input != "cart"){
             printf("Enter Quantity: ");
             scanf("%s",input);
+        }
+        if(input == "cart"){
+            showCart();
         }
         system("CLS");
     }
