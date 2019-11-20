@@ -4,3 +4,9 @@ struct MenuItem {
 };
 
 
+struct CartItems
+{
+    int menuitem;
+    int quantity;
+};
+
