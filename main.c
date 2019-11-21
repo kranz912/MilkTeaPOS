@@ -7,7 +7,7 @@ int                 _MENU_INDEX         = 0;
 int                 _CART_INDEX         = 0;
 struct MenuItem     _MENU[2048];
 struct CartItems    _CART[2048];
-
+char    _INPUT[50];
 
 void Push(struct MenuItem item)
 {
@@ -88,12 +88,35 @@ void showCart()
 
 void showMainMenu()
 {
-    printf("[menu] Show Menu\n [cart] View Cart\n [add] Add Items\n [done] Finish Orders");
+    printf("[menu]\tShow Menu\n[cart]\tView Cart\n[add]\tAdd Items\n[done]\tFinish Orders\n[cancel]\tCancel Order");
 }
+
+int scan_int(char * Message){
+    
+    while (1)
+    {
+        /* code */
+        int num;
+        char term;
+        printf("%s", Message);
+        if(scanf("%d%c",&num,&term)!=2 || term !='\n'){
+            printf("Invalid Input \n");
+        }
+        else{
+            return num;
+        }
+    }
+    
+}
+
+
 
 void addItem(){
     showMenu();
-    
+    scan_int("Enter Item Number: ");
+    printf("\n");
+    scan_int("Enter Quantity: ");
+
 }
 
 
@@ -103,7 +126,7 @@ int main()
     readMenuFile("menu.txt");
     system("CLS");
     buildCart();
-    char*   _INPUT[50]      = NULL;
+
     int     _ISCANCELLED    = 0;
     int     _ISDONE         = 0;
     int     _VIEWCART       = 0;
@@ -121,21 +144,26 @@ int main()
         _VIEWCART       = !strcmp(_INPUT, "cart");
         _VIEWMENU       = !strcmp(_INPUT, "menu");
         _ADDITEM        = !strcmp(_INPUT, "add");
-
+        system("CLS");
         if (_ADDITEM)
         {   
-            printf("Enter Quantity: ");
-            scanf("%s", _INPUT);
+            addItem();
         }
-        if (_VIEWCART)
+        else if (_VIEWCART)
         {
             showCart();
-            getchar();
+            getch();
         }
-        if (_VIEWMENU)
+        else if (_VIEWMENU)
         {
             showMenu();
-            getchar();
+            getch();
+        }
+        else if(_ISDONE){
+
+        }
+        else{
+            printf("Invalid Input");
         }
         system("CLS");
     }
