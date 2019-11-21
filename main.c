@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "datastructures.c"
+#include <ctype.h>
 
 int                 _MENU_INDEX         = 0;
 int                 _CART_INDEX         = 0;
@@ -88,34 +89,42 @@ void showCart()
 
 void showMainMenu()
 {
-    printf("[menu]\tShow Menu\n[cart]\tView Cart\n[add]\tAdd Items\n[done]\tFinish Orders\n[cancel]\tCancel Order");
+    printf("[menu]\t\tShow Menu\n[cart]\t\tView Cart\n[add]\t\tAdd Items\n[done]\t\tFinish Orders\n[cancel]\t\tCancel Order\n");
 }
 
 int scan_int(char * Message){
     
+    char _NUM    =  0;
+
     while (1)
     {
-        /* code */
-        int num;
-        char term;
         printf("%s", Message);
-        if(scanf("%d%c",&num,&term)!=2 || term !='\n'){
-            printf("Invalid Input \n");
+        
+        scanf("%s",&_NUM);
+        
+        getch();
+        
+        if(isdigit(_NUM))
+        {
+            printf("\n");
+            return _NUM;
         }
-        else{
-            return num;
+        
+        else
+        {
+            printf("\nInvalid Input \n");
         }
     }
-    
 }
 
 
 
 void addItem(){
+    
     showMenu();
-    scan_int("Enter Item Number: ");
-    printf("\n");
-    scan_int("Enter Quantity: ");
+    
+    int _ITEM_NUMBER =  scan_int("Enter Item Number: ");
+    int _QUANTITY    =  scan_int("Enter Quantity: ");
 
 }
 
@@ -124,7 +133,9 @@ int main()
 {
 
     readMenuFile("menu.txt");
+    
     system("CLS");
+    
     buildCart();
 
     int     _ISCANCELLED    = 0;
@@ -132,6 +143,7 @@ int main()
     int     _VIEWCART       = 0;
     int     _VIEWMENU       = 0;
     int     _ADDITEM        = 0;
+    
     while (!_ISCANCELLED && !_ISDONE)
     {
         showMainMenu();
@@ -144,16 +156,20 @@ int main()
         _VIEWCART       = !strcmp(_INPUT, "cart");
         _VIEWMENU       = !strcmp(_INPUT, "menu");
         _ADDITEM        = !strcmp(_INPUT, "add");
+        
         system("CLS");
+        
         if (_ADDITEM)
         {   
             addItem();
         }
+        
         else if (_VIEWCART)
         {
             showCart();
             getch();
         }
+
         else if (_VIEWMENU)
         {
             showMenu();
@@ -162,9 +178,11 @@ int main()
         else if(_ISDONE){
 
         }
+
         else{
             printf("Invalid Input");
         }
+        
         system("CLS");
     }
 }
