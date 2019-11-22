@@ -205,13 +205,11 @@ int main()
             {   
                 addItem();
             }
-            
             else if (_VIEWCART)
             {
                 showCart();
                 getch();
             }
-
             else if (_VIEWMENU)
             {
                 showMenu();
@@ -220,8 +218,8 @@ int main()
             else if(_ISDONE){
 
             }
-
-            else{
+            else
+            {
                 printf("Invalid Input");
             }
             
