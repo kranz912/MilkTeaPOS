@@ -59,6 +59,7 @@ void printItem(int index)
 {
     printf("[%d] %-50s %-12f \n", index, _MENU[index].Name, _MENU[index].Price);
 }
+
 float getTotal()
 {
     float _TOTAL     = 0;
@@ -71,6 +72,7 @@ float getTotal()
     }
     return _TOTAL;
 }
+
 void showMenu()
 {
     for (int i = 0; i < _MENU_INDEX; i++)
@@ -78,6 +80,7 @@ void showMenu()
         printItem(i);
     }
 }
+
 void buildCart()
 {
     _CART_INDEX = 0;
@@ -89,6 +92,7 @@ void buildCart()
         _CART_INDEX                += 1;
     }
 }
+
 void showCart()
 {
     float _TOTAL     = 0;
@@ -161,17 +165,14 @@ int scan_int(char * Message,bool isItem){
     }
 }
 
-
-
 void addItem()
 {
     showMenu();
-    
+
     int _ITEM_NUMBER              =  scan_int("Enter Item Number: ",true);
     int _QUANTITY                 =  scan_int("Enter Quantity: ", false);
     _CART[_ITEM_NUMBER].Quantity +=  _QUANTITY;
 }
-
 
 int main()
 {
@@ -180,9 +181,6 @@ int main()
     
     system("CLS");
     
-
-
-
     while(1){
         int     _ISCANCELLED    = 0;
         int     _ISDONE         = 0;
@@ -255,8 +253,6 @@ int main()
                     }
                 }
             }
-            
         }
     }
-    
 }
