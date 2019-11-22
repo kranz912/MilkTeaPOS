@@ -10,7 +10,7 @@ int                 _MENU_INDEX         = 0;
 int                 _CART_INDEX         = 0;
 struct MenuItem     _MENU[2048];
 struct CartItems    _CART[2048];
-char    _INPUT[50];
+char                _INPUT[50];
 
 void Push(struct MenuItem item)
 {
