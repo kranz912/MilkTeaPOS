@@ -166,11 +166,9 @@ int scan_int(char * Message,bool isItem){
 void addItem()
 {
     showMenu();
-
+    
     int _ITEM_NUMBER              =  scan_int("Enter Item Number: ",true);
-
     int _QUANTITY                 =  scan_int("Enter Quantity: ", false);
-
     _CART[_ITEM_NUMBER].Quantity +=  _QUANTITY;
 }
 
