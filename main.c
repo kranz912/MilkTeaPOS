@@ -178,7 +178,8 @@ int main()
     
     system("CLS");
     
-    while(1){
+    while(1)
+    {
         int     _ISCANCELLED    = 0;
         int     _ISDONE         = 0;
         int     _VIEWCART       = 0;
@@ -225,7 +226,8 @@ int main()
             
             system("CLS");
         }
-        if(_ISDONE){
+        if(_ISDONE)
+        {
             float _TOTAL = getTotal();
             if(_TOTAL>0){
 
@@ -237,12 +239,14 @@ int main()
                     printf("Amount due is %f\n",_TOTAL);
                     printf("Enter payment amount:" );
                     scanf("%s",_PY);
-                    if(isInt(_PY)){
+                    if(isInt(_PY))
+                    {
                         _PAYMENT = strtof(_PY,NULL);
                     }
                     else{
                         _ISCANCELLED    = !strcmp(_PY, "cancel");
-                        if(!_ISCANCELLED){
+                        if(!_ISCANCELLED)
+                        {
                             printf("\nInvalid Input\n");
                         }
                     }
