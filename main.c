@@ -5,7 +5,6 @@
 #include "datastructures.c"
 #include <ctype.h>
 
-
 int                 _MENU_INDEX         = 0;
 int                 _CART_INDEX         = 0;
 struct MenuItem     _MENU[2048];
@@ -20,7 +19,6 @@ void Push(struct MenuItem item)
 
 const char *getfield(char *line, int num)
 {
-    
     const char *token    = strtok(line, ",\n");;
           int  cursor    = 0;
     if (num >= cursor)
@@ -123,7 +121,8 @@ void showMainMenu()
     printf("%-20s %-20s \n","[cancel]","Cancel Order");
 }
 
-bool isInt(char _c[]){
+bool isInt(char _c[])
+{
     for (int i = 0; _c[i]!='\0'; i++)
     {
 
@@ -133,7 +132,6 @@ bool isInt(char _c[]){
         }
     }
     return true;
-
 }
 
 int scan_int(char * Message,bool isItem){
@@ -160,8 +158,7 @@ int scan_int(char * Message,bool isItem){
             }
          
         }
-        printf("\nInvalid Input \n");
-        
+        printf("\nInvalid Input \n");   
     }
 }
 
