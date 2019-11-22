@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "datastructures.c"
 #include <ctype.h>
+
 
 int                 _MENU_INDEX         = 0;
 int                 _CART_INDEX         = 0;
@@ -73,59 +75,83 @@ void buildCart()
     for (int i = 0; i < _MENU_INDEX; i++)
     {
         char *name                  = _MENU[i].Name;
-        _CART[_CART_INDEX].id       = _CART_INDEX;
         _CART[_CART_INDEX].Name     = name;
-        _CART[_CART_INDEX].quantity = 0;
+        _CART[_CART_INDEX].Quantity = 0;
         _CART_INDEX                += 1;
     }
 }
 void showCart()
 {
     for (int i = 0; i < _CART_INDEX; i++)
-    {
-        printf("%-50s %-12d \n", _CART[i].Name, _CART[i].quantity);
+    {   
+         printf("%-50s %-12d \n", _CART[i].Name, _CART[i].Quantity);
+        
     }
 }
 
 void showMainMenu()
 {
-    printf("[menu]\t\tShow Menu\n[cart]\t\tView Cart\n[add]\t\tAdd Items\n[done]\t\tFinish Orders\n[cancel]\t\tCancel Order\n");
+    printf("%-20s %-20s \n","[menu]","Show Menu");
+    printf("%-20s %-20s \n","[cart]","View Cart");
+    printf("%-20s %-20s \n","[add]","Add Items");
+    printf("%-20s %-20s \n","[done]","Finish Order");
+    printf("%-20s %-20s \n","[cancel]","Cancel Order");
 }
 
-int scan_int(char * Message){
+bool isInt(char _c[]){
+    for (int i = 0; _c[i]!='\0'; i++)
+    {
+        /* code */
+        if(!isdigit(_c[i])){
+             return false;
+        }
+    }
+    return true;
+
+}
+
+int scan_int(char * Message,bool isItem){
     
-    char _NUM    =  0;
+    char _NUM[2049];
 
     while (1)
     {
         printf("%s", Message);
         
-        scanf("%s",&_NUM);
-        
-        getch();
-        
-        if(isdigit(_NUM))
-        {
-            printf("\n");
-            return _NUM;
+        scanf("%s",_NUM);
+
+        printf("%s isdigit %d",_NUM,isInt(_NUM));
+        if(isInt(_NUM))
+        {   
+            int _ret =atoi(_NUM);
+            if(_ret>=0){
+                if(isItem){
+                    if(_ret<_CART_INDEX){
+                        return _ret;
+                    }
+                }
+                else{
+                    return _ret;
+                }
+            }
+         
         }
+        printf("\nInvalid Input \n");
         
-        else
-        {
-            printf("\nInvalid Input \n");
-        }
     }
 }
 
 
 
-void addItem(){
-    
+void addItem()
+{
     showMenu();
-    
-    int _ITEM_NUMBER =  scan_int("Enter Item Number: ");
-    int _QUANTITY    =  scan_int("Enter Quantity: ");
 
+    int _ITEM_NUMBER              =  scan_int("Enter Item Number: ",true);
+
+    int _QUANTITY                 =  scan_int("Enter Quantity: ", false);
+
+    _CART[_ITEM_NUMBER].Quantity +=  _QUANTITY;
 }
 
 

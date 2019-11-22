@@ -6,8 +6,7 @@ struct MenuItem {
 
 struct CartItems
 {
-    int id;
     char * Name;
-    int quantity;
+    int Quantity;
 };
 
