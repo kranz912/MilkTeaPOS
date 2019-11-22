@@ -232,9 +232,9 @@ int main()
             if(_TOTAL>0){
 
                 char    _PY[2048];
-                float   _PAYMENT;
+                float   _PAYMENT =0;
 
-                while (_TOTAL!=_PAYMENT && !_ISCANCELLED)
+                while (_TOTAL>_PAYMENT && !_ISCANCELLED)
                 {
                     printf("Amount due is %f\n",_TOTAL);
                     printf("Enter payment amount:" );
@@ -251,6 +251,13 @@ int main()
                         }
                     }
                 }
+                system("CLS");
+                printf("Thank you! \n");
+                showCart();
+                float change = _PAYMENT-_TOTAL;
+                printf("Your change is:  %f",change);
+                getch();
+                system("CLS");
             }
         }
     }
