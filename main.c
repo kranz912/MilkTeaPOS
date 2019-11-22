@@ -59,9 +59,17 @@ void printItem(int index)
 {
     printf("[%d] %-50s %-12f \n", index, _MENU[index].Name, _MENU[index].Price);
 }
-float getItemPrice(int index)
+float getTotal()
 {
-    return _MENU[index].Price;
+    float _TOTAL     = 0;
+    for (int i = 0; i < _CART_INDEX; i++)
+    {  
+        if( _CART[i].Quantity>0){
+        float   _subtotal    =   _CART[i].Quantity * _MENU[i].Price;
+                 _TOTAL      +=   _subtotal;
+        }
+    }
+    return _TOTAL;
 }
 void showMenu()
 {
@@ -72,6 +80,7 @@ void showMenu()
 }
 void buildCart()
 {
+    _CART_INDEX = 0;
     for (int i = 0; i < _MENU_INDEX; i++)
     {
         char *name                  = _MENU[i].Name;
@@ -82,11 +91,23 @@ void buildCart()
 }
 void showCart()
 {
+    float _TOTAL     = 0;
+    printf("%-50s %-12s   %-12s  %-12s\n", "ITEM", "Quantity", "Price" , "");
     for (int i = 0; i < _CART_INDEX; i++)
     {   
-         printf("%-50s %-12d \n", _CART[i].Name, _CART[i].Quantity);
-        
+        if( _CART[i].Quantity>0){
+
+            float   _subtotal    =   _CART[i].Quantity * _MENU[i].Price;
+                    _TOTAL      +=   _subtotal;
+
+            printf("%-50s %-12d x %-12f = %-12f\n", _CART[i].Name, _CART[i].Quantity, _MENU[i].Price , _subtotal);
+        }
     }
+    if(_TOTAL>0){
+        printf("%-50s %-12s   %-12s  %-12s\n", "", "", "" , "___________");
+        printf("%-50s %-12s   %-12s = %-12f\n", "Total", "", "" , _TOTAL);
+    }
+
 }
 
 void showMainMenu()
@@ -101,8 +122,9 @@ void showMainMenu()
 bool isInt(char _c[]){
     for (int i = 0; _c[i]!='\0'; i++)
     {
-        /* code */
+
         if(!isdigit(_c[i])){
+
              return false;
         }
     }
@@ -119,8 +141,6 @@ int scan_int(char * Message,bool isItem){
         printf("%s", Message);
         
         scanf("%s",_NUM);
-
-        printf("%s isdigit %d",_NUM,isInt(_NUM));
         if(isInt(_NUM))
         {   
             int _ret =atoi(_NUM);
@@ -162,53 +182,83 @@ int main()
     
     system("CLS");
     
-    buildCart();
 
-    int     _ISCANCELLED    = 0;
-    int     _ISDONE         = 0;
-    int     _VIEWCART       = 0;
-    int     _VIEWMENU       = 0;
-    int     _ADDITEM        = 0;
-    
-    while (!_ISCANCELLED && !_ISDONE)
-    {
-        showMainMenu();
 
-        printf("Input: ");
-        scanf("%s", _INPUT);
 
-        _ISCANCELLED    = !strcmp(_INPUT, "cancel");
-        _ISDONE         = !strcmp(_INPUT, "done");
-        _VIEWCART       = !strcmp(_INPUT, "cart");
-        _VIEWMENU       = !strcmp(_INPUT, "menu");
-        _ADDITEM        = !strcmp(_INPUT, "add");
-        
-        system("CLS");
-        
-        if (_ADDITEM)
-        {   
-            addItem();
-        }
-        
-        else if (_VIEWCART)
+    while(1){
+        int     _ISCANCELLED    = 0;
+        int     _ISDONE         = 0;
+        int     _VIEWCART       = 0;
+        int     _VIEWMENU       = 0;
+        int     _ADDITEM        = 0;
+
+        buildCart();
+        while (!_ISCANCELLED && !_ISDONE)
         {
-            showCart();
-            getch();
-        }
+            showMainMenu();
 
-        else if (_VIEWMENU)
-        {
-            showMenu();
-            getch();
-        }
-        else if(_ISDONE){
+            printf("Input: ");
+            scanf("%s", _INPUT);
 
-        }
+            _ISCANCELLED    = !strcmp(_INPUT, "cancel");
+            _ISDONE         = !strcmp(_INPUT, "done");
+            _VIEWCART       = !strcmp(_INPUT, "cart");
+            _VIEWMENU       = !strcmp(_INPUT, "menu");
+            _ADDITEM        = !strcmp(_INPUT, "add");
+            
+            system("CLS");
+            
+            if (_ADDITEM)
+            {   
+                addItem();
+            }
+            
+            else if (_VIEWCART)
+            {
+                showCart();
+                getch();
+            }
 
-        else{
-            printf("Invalid Input");
+            else if (_VIEWMENU)
+            {
+                showMenu();
+                getch();
+            }
+            else if(_ISDONE){
+
+            }
+
+            else{
+                printf("Invalid Input");
+            }
+            
+            system("CLS");
         }
-        
-        system("CLS");
+        if(_ISDONE){
+            float _TOTAL = getTotal();
+            if(_TOTAL>0){
+
+                char    _PY[2048];
+                float   _PAYMENT;
+
+                while (_TOTAL!=_PAYMENT && !_ISCANCELLED)
+                {
+                    printf("Amount due is %f\n",_TOTAL);
+                    printf("Enter payment amount:" );
+                    scanf("%s",_PY);
+                    if(isInt(_PY)){
+                        _PAYMENT = strtof(_PY,NULL);
+                    }
+                    else{
+                        _ISCANCELLED    = !strcmp(_PY, "cancel");
+                        if(!_ISCANCELLED){
+                            printf("\nInvalid Input\n");
+                        }
+                    }
+                }
+            }
+            
+        }
     }
+    
 }
